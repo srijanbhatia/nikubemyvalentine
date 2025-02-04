@@ -26,13 +26,13 @@
         }
         .buttons {
             position: relative;
-            width: 80vw;
-            max-width: 400px;
-            height: 250px;
+            width: 60vw;
+            max-width: 350px;
+            height: 150px;
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            border: 2px solid transparent;
+            gap: 10px;
         }
         button {
             font-size: 1.2rem;
@@ -41,6 +41,7 @@
             cursor: pointer;
             border-radius: 5px;
             position: relative;
+            margin: 2px;
         }
         .yes {
             background-color: #ff4081;
@@ -48,6 +49,7 @@
         }
         .no {
             background-color: #ccc;
+            z-index: 10;
         }
     </style>
 </head>
@@ -59,39 +61,41 @@
     </div>
     
     <script>
-        const messages = [
-            "I knew you'd say yes! ❤️",
-            "Finally, I have you all to myself! 😏",
-            "You just made me the happiest person alive! 💖",
-            "Can’t wait to hold you close! 🔥",
-            "I hope you know you just signed up for endless cuddles! 🥰",
-            "You just earned yourself a surprise… 😉",
-            "We both knew this was going to happen! 😘",
-            "Valentine’s Day is about to get unforgettable! 🔥",
-            "Get ready for a night you won’t forget! 😏",
-            "This means I get to spoil you now, right? 💕",
-            "No take-backs! You’re mine now! 😆",
-            "Now we just need candles and some wine… 🍷✨"
-        ];
-        
+        let ohCount = 1;
+
         function sayYes() {
-            let randomMessage = messages[Math.floor(Math.random() * messages.length)];
-            document.getElementById("valentineMessage").innerText = randomMessage;
+            let messages = [
+                "I knew you'd say yes! ❤️",
+                "Finally, I have you all to myself! 😏",
+                "You just made me the happiest person alive! 💖",
+                "Can’t wait to hold you close! 🔥",
+                "I hope you know you just signed up for endless cuddles! 🥰",
+                "You just earned yourself a surprise… 😉",
+                "We both knew this was going to happen! 😘",
+                "Valentine’s Day is about to get unforgettable! 🔥",
+                "Get ready for a night you won’t forget! 😏",
+                "This means I get to spoil you now, right? 💕",
+                "No take-backs! You’re mine now! 😆",
+                "Now we just need candles and some wine… 🍷✨"
+            ];
+            document.getElementById("valentineMessage").innerText = messages[Math.floor(Math.random() * messages.length)];
         }
 
         function moveNoButton() {
             let noButton = document.getElementById("noButton");
             let container = document.getElementById("buttonContainer");
-            let maxX = container.offsetWidth - noButton.offsetWidth - 10;
-            let maxY = container.offsetHeight - noButton.offsetHeight - 10;
+            let maxX = container.offsetWidth - noButton.offsetWidth - 20;
+            let maxY = container.offsetHeight - noButton.offsetHeight - 20;
             
-            let newX = Math.max(10, Math.random() * maxX);
-            let newY = Math.max(10, Math.random() * maxY);
+            let newX = Math.max(10, Math.min(Math.random() * maxX, maxX));
+            let newY = Math.max(10, Math.min(Math.random() * maxY, maxY));
             
             noButton.style.position = "absolute";
             noButton.style.left = newX + "px";
             noButton.style.top = newY + "px";
             
+            document.getElementById("valentineMessage").innerText = "Abbey oh" + "h".repeat(ohCount) + "!";
+            ohCount++;
             addYesButton();
         }
         
@@ -100,16 +104,17 @@
             newButton.innerText = "Yes";
             newButton.classList.add("yes");
             newButton.style.position = "absolute";
-            let container = document.getElementById("buttonContainer");
+            let maxX = window.innerWidth - 100;
+            let maxY = window.innerHeight - 100;
             
-            let maxX = container.offsetWidth - 80;
-            let maxY = container.offsetHeight - 40;
+            let newX = Math.max(20, Math.min(Math.random() * maxX, maxX));
+            let newY = Math.max(20, Math.min(Math.random() * maxY, maxY));
             
-            newButton.style.left = Math.max(10, Math.random() * maxX) + "px";
-            newButton.style.top = Math.max(10, Math.random() * maxY) + "px";
+            newButton.style.left = newX + "px";
+            newButton.style.top = newY + "px";
             
             newButton.onclick = sayYes;
-            container.appendChild(newButton);
+            document.body.appendChild(newButton);
         }
         
         document.getElementById("noButton").addEventListener("mouseover", function() {
