@@ -27,16 +27,16 @@
         .buttons {
             position: relative;
             width: 80vw;
-            max-width: 500px;
-            height: 300px;
+            max-width: 400px;
+            height: 250px;
             display: flex;
             justify-content: center;
             align-items: center;
+            border: 2px solid transparent;
         }
         button {
             font-size: 1.2rem;
             padding: 10px 20px;
-            margin: 10px;
             border: none;
             cursor: pointer;
             border-radius: 5px;
@@ -54,7 +54,7 @@
 </head>
 <body>
     <h1 id="valentineMessage">Will you be my Valentine? ❤️</h1>
-    <div class="buttons">
+    <div class="buttons" id="buttonContainer">
         <button class="yes" onclick="sayYes()">Yes</button>
         <button class="no" id="noButton" onclick="moveNoButton()">No</button>
     </div>
@@ -82,12 +82,12 @@
 
         function moveNoButton() {
             let noButton = document.getElementById("noButton");
-            let buttonContainer = document.querySelector(".buttons");
-            let maxX = buttonContainer.offsetWidth - noButton.offsetWidth;
-            let maxY = buttonContainer.offsetHeight - noButton.offsetHeight;
+            let container = document.getElementById("buttonContainer");
+            let maxX = container.offsetWidth - noButton.offsetWidth - 10;
+            let maxY = container.offsetHeight - noButton.offsetHeight - 10;
             
-            let newX = Math.max(10, Math.min(Math.random() * maxX, maxX));
-            let newY = Math.max(10, Math.min(Math.random() * maxY, maxY));
+            let newX = Math.max(10, Math.random() * maxX);
+            let newY = Math.max(10, Math.random() * maxY);
             
             noButton.style.left = newX + "px";
             noButton.style.top = newY + "px";
@@ -100,14 +100,26 @@
             newButton.innerText = "Yes";
             newButton.classList.add("yes");
             newButton.style.position = "absolute";
-            newButton.style.left = Math.random() * 80 + "%";
-            newButton.style.top = Math.random() * 80 + "%";
+            let container = document.getElementById("buttonContainer");
+            
+            let maxX = container.offsetWidth - 80;
+            let maxY = container.offsetHeight - 40;
+            
+            newButton.style.left = Math.max(10, Math.random() * maxX) + "px";
+            newButton.style.top = Math.max(10, Math.random() * maxY) + "px";
+            
             newButton.onclick = sayYes;
-            document.querySelector(".buttons").appendChild(newButton);
+            container.appendChild(newButton);
         }
         
         document.getElementById("noButton").addEventListener("mouseover", function() {
             if (!/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)) {
+                moveNoButton();
+            }
+        });
+        
+        document.getElementById("noButton").addEventListener("click", function() {
+            if (/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)) {
                 moveNoButton();
             }
         });
