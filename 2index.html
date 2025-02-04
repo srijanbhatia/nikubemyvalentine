@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Be My Valentine?</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&display=swap');
+        
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffcccb;
+            font-family: 'Manrope', sans-serif;
+            text-align: center;
+            overflow: hidden;
+            margin: 0;
+        }
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        .buttons {
+            position: relative;
+        }
+        button {
+            font-size: 1.2rem;
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .yes {
+            background-color: #ff4081;
+            color: white;
+        }
+        .no {
+            background-color: #ccc;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="valentineMessage">Will you be my Valentine? ❤️</h1>
+    <div class="buttons">
+        <button class="yes" onclick="sayYes()">Yes</button>
+        <button class="no" onclick="moveNoButton()">No</button>
+    </div>
+    
+    <script>
+        const messages = [
+            "I knew you'd say yes! ❤️",
+            "Finally, I have you all to myself! 😏",
+            "You just made me the happiest person alive! 💖",
+            "Can’t wait to hold you close! 🔥",
+            "I hope you know you just signed up for endless cuddles! 🥰",
+            "You just earned yourself a surprise… 😉",
+            "We both knew this was going to happen! 😘",
+            "Valentine’s Day is about to get unforgettable! 🔥",
+            "Get ready for a night you won’t forget! 😏",
+            "This means I get to spoil you now, right? 💕",
+            "No take-backs! You’re mine now! 😆",
+            "Now we just need candles and some wine… 🍷✨"
+        ];
+        
+        function sayYes() {
+            let randomMessage = messages[Math.floor(Math.random() * messages.length)];
+            document.getElementById("valentineMessage").innerText = randomMessage;
+        }
+
+        function moveNoButton() {
+            let noButton = document.querySelector(".no");
+            if (/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)) {
+                noButton.style.left = Math.random() * (window.innerWidth - 100) + "px";
+                noButton.style.top = Math.random() * (window.innerHeight - 50) + "px";
+            } else {
+                noButton.addEventListener("mouseover", function() {
+                    noButton.style.position = "absolute";
+                    noButton.style.left = Math.random() * (window.innerWidth - 100) + "px";
+                    noButton.style.top = Math.random() * (window.innerHeight - 50) + "px";
+                });
+            }
+        }
+    </script>
+</body>
+</html>
