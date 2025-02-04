@@ -23,6 +23,8 @@
         h1 {
             font-size: 2rem;
             margin-bottom: 20px;
+            position: relative;
+            z-index: 10;
         }
         .buttons {
             position: relative;
@@ -105,10 +107,13 @@
             newButton.classList.add("yes");
             newButton.style.position = "absolute";
             let maxX = window.innerWidth - 100;
-            let maxY = window.innerHeight - 100;
+            let maxY = window.innerHeight - 150;
             
-            let newX = Math.max(20, Math.min(Math.random() * maxX, maxX));
-            let newY = Math.max(20, Math.min(Math.random() * maxY, maxY));
+            let newX, newY;
+            do {
+                newX = Math.max(20, Math.min(Math.random() * maxX, maxX));
+                newY = Math.max(100, Math.min(Math.random() * maxY, maxY));
+            } while (newY < 150);
             
             newButton.style.left = newX + "px";
             newButton.style.top = newY + "px";
