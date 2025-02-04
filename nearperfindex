@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Be My Valentine?</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&display=swap');
+        
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffcccb;
+            font-family: 'Manrope', sans-serif;
+            text-align: center;
+            overflow: hidden;
+            margin: 0;
+            position: relative;
+        }
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        .buttons {
+            position: relative;
+            width: 60vw;
+            max-width: 350px;
+            height: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+        button {
+            font-size: 1.2rem;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            position: relative;
+            margin: 2px;
+        }
+        .yes {
+            background-color: #ff4081;
+            color: white;
+        }
+        .no {
+            background-color: #ccc;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="valentineMessage">Will you be my Valentine? ❤️</h1>
+    <div class="buttons" id="buttonContainer">
+        <button class="yes" onclick="sayYes()">Yes</button>
+        <button class="no" id="noButton" onclick="moveNoButton()">No</button>
+    </div>
+    
+    <script>
+        let ohCount = 1;
+
+        function sayYes() {
+            let messages = [
+                "I knew you'd say yes! ❤️",
+                "Finally, I have you all to myself! 😏",
+                "You just made me the happiest person alive! 💖",
+                "Can’t wait to hold you close! 🔥",
+                "I hope you know you just signed up for endless cuddles! 🥰",
+                "You just earned yourself a surprise… 😉",
+                "We both knew this was going to happen! 😘",
+                "Valentine’s Day is about to get unforgettable! 🔥",
+                "Get ready for a night you won’t forget! 😏",
+                "This means I get to spoil you now, right? 💕",
+                "No take-backs! You’re mine now! 😆",
+                "Now we just need candles and some wine… 🍷✨"
+            ];
+            document.getElementById("valentineMessage").innerText = messages[Math.floor(Math.random() * messages.length)];
+        }
+
+        function moveNoButton() {
+            let noButton = document.getElementById("noButton");
+            let container = document.getElementById("buttonContainer");
+            let maxX = container.offsetWidth - noButton.offsetWidth - 20;
+            let maxY = container.offsetHeight - noButton.offsetHeight - 20;
+            
+            let newX = Math.max(10, Math.min(Math.random() * maxX, maxX));
+            let newY = Math.max(10, Math.min(Math.random() * maxY, maxY));
+            
+            noButton.style.position = "absolute";
+            noButton.style.left = newX + "px";
+            noButton.style.top = newY + "px";
+            
+            document.getElementById("valentineMessage").innerText = "Abbey oh" + "h".repeat(ohCount) + "!";
+            ohCount++;
+            addYesButton();
+        }
+        
+        function addYesButton() {
+            let newButton = document.createElement("button");
+            newButton.innerText = "Yes";
+            newButton.classList.add("yes");
+            newButton.style.position = "absolute";
+            let maxX = window.innerWidth - 100;
+            let maxY = window.innerHeight - 100;
+            
+            let newX = Math.max(20, Math.min(Math.random() * maxX, maxX));
+            let newY = Math.max(20, Math.min(Math.random() * maxY, maxY));
+            
+            newButton.style.left = newX + "px";
+            newButton.style.top = newY + "px";
+            
+            newButton.onclick = sayYes;
+            document.body.appendChild(newButton);
+        }
+        
+        document.getElementById("noButton").addEventListener("mouseover", function() {
+            if (!/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)) {
+                moveNoButton();
+            }
+        });
+        
+        document.getElementById("noButton").addEventListener("click", function() {
+            if (/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)) {
+                moveNoButton();
+            }
+        });
+    </script>
+</body>
+</html>
