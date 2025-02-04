@@ -18,6 +18,7 @@
             text-align: center;
             overflow: hidden;
             margin: 0;
+            position: relative;
         }
         h1 {
             font-size: 2rem;
@@ -33,14 +34,15 @@
             border: none;
             cursor: pointer;
             border-radius: 5px;
+            position: absolute;
         }
         .yes {
             background-color: #ff4081;
             color: white;
+            position: relative;
         }
         .no {
             background-color: #ccc;
-            position: absolute;
         }
     </style>
 </head>
@@ -48,7 +50,7 @@
     <h1 id="valentineMessage">Will you be my Valentine? ❤️</h1>
     <div class="buttons">
         <button class="yes" onclick="sayYes()">Yes</button>
-        <button class="no" onclick="moveNoButton()">No</button>
+        <button class="no" id="noButton">No</button>
     </div>
     
     <script>
@@ -73,16 +75,28 @@
         }
 
         function moveNoButton() {
-            let noButton = document.querySelector(".no");
+            let noButton = document.getElementById("noButton");
             let maxX = window.innerWidth - noButton.offsetWidth - 20;
             let maxY = window.innerHeight - noButton.offsetHeight - 20;
             
-            let newX = Math.max(10, Math.random() * maxX);
-            let newY = Math.max(10, Math.random() * maxY);
+            let newX = Math.max(10, Math.min(Math.random() * maxX, maxX));
+            let newY = Math.max(10, Math.min(Math.random() * maxY, maxY));
             
             noButton.style.left = newX + "px";
             noButton.style.top = newY + "px";
         }
+        
+        document.getElementById("noButton").addEventListener("mouseover", function() {
+            if (!/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)) {
+                moveNoButton();
+            }
+        });
+        
+        document.getElementById("noButton").addEventListener("click", function() {
+            if (/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)) {
+                moveNoButton();
+            }
+        });
     </script>
 </body>
 </html>
