@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Be My Valentine?</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&display=swap');
+        
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffcccb;
+            font-family: 'Manrope', sans-serif;
+            text-align: center;
+            overflow: hidden;
+            margin: 0;
+        }
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        .buttons {
+            position: relative;
+        }
+        button {
+            font-size: 1.2rem;
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .yes {
+            background-color: #ff4081;
+            color: white;
+        }
+        .no {
+            background-color: #ccc;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="valentineMessage">Will you be my Valentine? ❤️</h1>
+    <div class="buttons">
+        <button class="yes" onclick="sayYes()">Yes</button>
+        <button class="no" onclick="addYesButton()">No</button>
+    </div>
+    
+    <script>
+        function sayYes() {
+            document.getElementById("valentineMessage").innerText = "I knew you'd say yes! ❤️";
+        }
+
+        function addYesButton() {
+            let newButton = document.createElement("button");
+            newButton.innerText = "Yes";
+            newButton.classList.add("yes");
+            newButton.style.position = "absolute";
+            newButton.style.left = Math.random() * (window.innerWidth - 100) + "px";
+            newButton.style.top = Math.random() * (window.innerHeight - 50) + "px";
+            newButton.onclick = sayYes;
+            document.body.appendChild(newButton);
+        }
+    </script>
+</body>
+</html>
