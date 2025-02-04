@@ -40,7 +40,7 @@
         }
         .no {
             background-color: #ccc;
-            position: relative;
+            position: absolute;
         }
     </style>
 </head>
@@ -74,16 +74,14 @@
 
         function moveNoButton() {
             let noButton = document.querySelector(".no");
-            if (/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)) {
-                noButton.style.left = Math.random() * (window.innerWidth - 100) + "px";
-                noButton.style.top = Math.random() * (window.innerHeight - 50) + "px";
-            } else {
-                noButton.addEventListener("mouseover", function() {
-                    noButton.style.position = "absolute";
-                    noButton.style.left = Math.random() * (window.innerWidth - 100) + "px";
-                    noButton.style.top = Math.random() * (window.innerHeight - 50) + "px";
-                });
-            }
+            let maxX = window.innerWidth - noButton.offsetWidth - 20;
+            let maxY = window.innerHeight - noButton.offsetHeight - 20;
+            
+            let newX = Math.max(10, Math.random() * maxX);
+            let newY = Math.max(10, Math.random() * maxY);
+            
+            noButton.style.left = newX + "px";
+            noButton.style.top = newY + "px";
         }
     </script>
 </body>
