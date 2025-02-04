@@ -26,6 +26,12 @@
         }
         .buttons {
             position: relative;
+            width: 80vw;
+            max-width: 500px;
+            height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         button {
             font-size: 1.2rem;
@@ -50,7 +56,7 @@
     <h1 id="valentineMessage">Will you be my Valentine? ❤️</h1>
     <div class="buttons">
         <button class="yes" onclick="sayYes()">Yes</button>
-        <button class="no" id="noButton">No</button>
+        <button class="no" id="noButton" onclick="moveNoButton()">No</button>
     </div>
     
     <script>
@@ -76,24 +82,32 @@
 
         function moveNoButton() {
             let noButton = document.getElementById("noButton");
-            let maxX = window.innerWidth - noButton.offsetWidth - 500;
-            let maxY = window.innerHeight - noButton.offsetHeight - 500;
+            let buttonContainer = document.querySelector(".buttons");
+            let maxX = buttonContainer.offsetWidth - noButton.offsetWidth;
+            let maxY = buttonContainer.offsetHeight - noButton.offsetHeight;
             
             let newX = Math.max(10, Math.min(Math.random() * maxX, maxX));
             let newY = Math.max(10, Math.min(Math.random() * maxY, maxY));
             
             noButton.style.left = newX + "px";
             noButton.style.top = newY + "px";
+            
+            addYesButton();
+        }
+        
+        function addYesButton() {
+            let newButton = document.createElement("button");
+            newButton.innerText = "Yes";
+            newButton.classList.add("yes");
+            newButton.style.position = "absolute";
+            newButton.style.left = Math.random() * 80 + "%";
+            newButton.style.top = Math.random() * 80 + "%";
+            newButton.onclick = sayYes;
+            document.querySelector(".buttons").appendChild(newButton);
         }
         
         document.getElementById("noButton").addEventListener("mouseover", function() {
             if (!/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)) {
-                moveNoButton();
-            }
-        });
-        
-        document.getElementById("noButton").addEventListener("click", function() {
-            if (/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)) {
                 moveNoButton();
             }
         });
