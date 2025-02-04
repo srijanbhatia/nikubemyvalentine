@@ -30,7 +30,7 @@
             max-width: 400px;
             height: 250px;
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
             border: 2px solid transparent;
         }
@@ -40,12 +40,11 @@
             border: none;
             cursor: pointer;
             border-radius: 5px;
-            position: absolute;
+            position: relative;
         }
         .yes {
             background-color: #ff4081;
             color: white;
-            position: relative;
         }
         .no {
             background-color: #ccc;
@@ -89,6 +88,7 @@
             let newX = Math.max(10, Math.random() * maxX);
             let newY = Math.max(10, Math.random() * maxY);
             
+            noButton.style.position = "absolute";
             noButton.style.left = newX + "px";
             noButton.style.top = newY + "px";
             
