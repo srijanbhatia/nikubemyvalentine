@@ -43,7 +43,6 @@
             border: none;
             cursor: pointer;
             border-radius: 5px;
-            position: relative;
             margin: 2px;
         }
         .yes {
@@ -63,7 +62,12 @@
             align-items: center;
             margin-top: 20px;
         }
-        video, canvas {
+        video {
+            transform: scaleX(-1);
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+        canvas {
             border-radius: 10px;
             margin-bottom: 10px;
         }
@@ -73,7 +77,7 @@
     <h1 id="valentineMessage">Will you be my Valentine? ❤️</h1>
     <div class="buttons" id="buttonContainer">
         <button class="yes" onclick="sayYes()">Yes</button>
-        <button class="no" id="noButton" onclick="moveNoButton()">No</button>
+        <button class="no" id="noButton" onclick="addYesButton()">No</button>
     </div>
     <button id="shareButton" class="hidden" onclick="openCamera()">Share Your Reaction 📸</button>
     
@@ -88,42 +92,13 @@
         let ohCount = 1;
 
         function sayYes() {
-            let messages = [
-                "I knew you'd say yes! ❤️",
-                "Finally, I have you all to myself! 😏",
-                "You just made me the happiest person alive! 💖",
-                "Can’t wait to hold you close! 🔥",
-                "I hope you know you just signed up for endless cuddles! 🥰",
-                "You just earned yourself a surprise… 😉",
-                "We both knew this was going to happen! 😘",
-                "Valentine’s Day is about to get unforgettable! 🔥",
-                "Get ready for a night you won’t forget! 😏",
-                "This means I get to spoil you now, right? 💕",
-                "No take-backs! You’re mine now! 😆",
-                "Now we just need candles and some wine… 🍷✨"
-            ];
-            document.getElementById("valentineMessage").innerText = messages[Math.floor(Math.random() * messages.length)];
             document.getElementById("shareButton").classList.remove("hidden");
         }
 
-        function moveNoButton() {
-            let noButton = document.getElementById("noButton");
-            let maxX = window.innerWidth - noButton.offsetWidth - 50;
-            let maxY = window.innerHeight - noButton.offsetHeight - 100;
-            
-            let newX = Math.max(20, Math.random() * maxX);
-            let newY = Math.max(50, Math.random() * maxY);
-            
-            noButton.style.position = "absolute";
-            noButton.style.left = newX + "px";
-            noButton.style.top = newY + "px";
-            
+        function addYesButton() {
             document.getElementById("valentineMessage").innerHTML = "Abbey oh" + "h".repeat(ohCount).replace(/(.{15})/g, "$1<br>") + "!";
             ohCount++;
-            addYesButton();
-        }
-        
-        function addYesButton() {
+            
             let newButton = document.createElement("button");
             newButton.innerText = "Yes";
             newButton.classList.add("yes");
@@ -155,6 +130,8 @@
             let context = canvas.getContext("2d");
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
+            context.translate(canvas.width, 0);
+            context.scale(-1, 1);
             context.drawImage(video, 0, 0, canvas.width, canvas.height);
             canvas.classList.remove("hidden");
             
