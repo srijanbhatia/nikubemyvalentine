@@ -56,21 +56,6 @@
         .hidden {
             display: none;
         }
-        #cameraContainer {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            margin-top: 20px;
-        }
-        video {
-            transform: scaleX(-1);
-            border-radius: 10px;
-            margin-bottom: 10px;
-        }
-        canvas {
-            border-radius: 10px;
-            margin-bottom: 10px;
-        }
     </style>
 </head>
 <body>
@@ -79,20 +64,28 @@
         <button class="yes" onclick="sayYes()">Yes</button>
         <button class="no" id="noButton" onclick="addYesButton()">No</button>
     </div>
-    <button id="shareButton" class="hidden" onclick="openCamera()">Share Your Reaction 📸</button>
-    
-    <div id="cameraContainer">
-        <video id="video" autoplay></video>
-        <button id="captureButton" onclick="takePhoto()">📸 Capture</button>
-        <canvas id="canvas" class="hidden"></canvas>
-        <a id="shareLink" class="hidden" download="reaction.png">Share on WhatsApp</a>
-    </div>
+    <button id="whatsappButton" class="hidden" onclick="openWhatsApp()">Come tell me you love me then 💕</button>
     
     <script>
         let ohCount = 1;
 
         function sayYes() {
-            document.getElementById("shareButton").classList.remove("hidden");
+            let messages = [
+                "I knew you'd say yes! ❤️",
+                "Finally, I have you all to myself! 😏",
+                "You just made me the happiest person alive! 💖",
+                "Can’t wait to hold you close! 🔥",
+                "I hope you know you just signed up for endless cuddles! 🥰",
+                "You just earned yourself a surprise… 😉",
+                "We both knew this was going to happen! 😘",
+                "Valentine’s Day is about to get unforgettable! 🔥",
+                "Get ready for a night you won’t forget! 😏",
+                "This means I get to spoil you now, right? 💕",
+                "No take-backs! You’re mine now! 😆",
+                "Now we just need candles and some wine… 🍷✨"
+            ];
+            document.getElementById("valentineMessage").innerText = messages[Math.floor(Math.random() * messages.length)];
+            document.getElementById("whatsappButton").classList.remove("hidden");
         }
 
         function addYesButton() {
@@ -116,31 +109,8 @@
             document.body.appendChild(newButton);
         }
         
-        function openCamera() {
-            document.getElementById("cameraContainer").style.display = "flex";
-            let video = document.getElementById("video");
-            navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
-                video.srcObject = stream;
-            });
-        }
-        
-        function takePhoto() {
-            let canvas = document.getElementById("canvas");
-            let video = document.getElementById("video");
-            let context = canvas.getContext("2d");
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            context.translate(canvas.width, 0);
-            context.scale(-1, 1);
-            context.drawImage(video, 0, 0, canvas.width, canvas.height);
-            canvas.classList.remove("hidden");
-            
-            let imageURL = canvas.toDataURL("image/png");
-            let shareLink = document.getElementById("shareLink");
-            shareLink.href = imageURL;
-            shareLink.classList.remove("hidden");
-            shareLink.innerHTML = "📤 Share on WhatsApp";
-            shareLink.href = `https://api.whatsapp.com/send?text=Check%20out%20my%20reaction!&media=${imageURL}`;
+        function openWhatsApp() {
+            window.location.href = "https://api.whatsapp.com/send?phone=919999836635&text=I%20love%20you!";
         }
     </script>
 </body>
