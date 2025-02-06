@@ -25,6 +25,7 @@
             margin-bottom: 20px;
             position: relative;
             z-index: 10;
+            padding: 20px;
         }
         .buttons {
             position: relative;
@@ -96,7 +97,7 @@
             noButton.style.left = newX + "px";
             noButton.style.top = newY + "px";
             
-            document.getElementById("valentineMessage").innerText = "Abbey oh" + "h".repeat(ohCount) + "!";
+            document.getElementById("valentineMessage").innerHTML = "Abbey oh" + "h".repeat(ohCount).replace(/(.{15})/g, "$1<br>") + "!";
             ohCount++;
             addYesButton();
         }
@@ -113,7 +114,7 @@
             do {
                 newX = Math.max(20, Math.min(Math.random() * maxX, maxX));
                 newY = Math.max(100, Math.min(Math.random() * maxY, maxY));
-            } while (newY < 150);
+            } while (newY < 200);
             
             newButton.style.left = newX + "px";
             newButton.style.top = newY + "px";
