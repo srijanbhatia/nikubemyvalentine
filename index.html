@@ -33,7 +33,7 @@
             max-width: 350px;
             height: 150px;
             display: flex;
-            justify-content: center;
+            justify-content: space-around;
             align-items: center;
             gap: 10px;
         }
@@ -79,7 +79,7 @@
     
     <div id="cameraContainer">
         <video id="video" autoplay></video>
-        <button onclick="takePhoto()">📸 Capture</button>
+        <button id="captureButton" onclick="takePhoto()">📸 Capture</button>
         <canvas id="canvas" class="hidden"></canvas>
         <a id="shareLink" class="hidden" download="reaction.png">Share on WhatsApp</a>
     </div>
@@ -108,12 +108,11 @@
 
         function moveNoButton() {
             let noButton = document.getElementById("noButton");
-            let container = document.getElementById("buttonContainer");
-            let maxX = container.offsetWidth - noButton.offsetWidth - 20;
-            let maxY = container.offsetHeight - noButton.offsetHeight - 20;
+            let maxX = window.innerWidth - noButton.offsetWidth - 50;
+            let maxY = window.innerHeight - noButton.offsetHeight - 100;
             
-            let newX = Math.max(10, Math.min(Math.random() * maxX, maxX));
-            let newY = Math.max(10, Math.min(Math.random() * maxY, maxY));
+            let newX = Math.max(20, Math.random() * maxX);
+            let newY = Math.max(50, Math.random() * maxY);
             
             noButton.style.position = "absolute";
             noButton.style.left = newX + "px";
@@ -122,6 +121,24 @@
             document.getElementById("valentineMessage").innerHTML = "Abbey oh" + "h".repeat(ohCount).replace(/(.{15})/g, "$1<br>") + "!";
             ohCount++;
             addYesButton();
+        }
+        
+        function addYesButton() {
+            let newButton = document.createElement("button");
+            newButton.innerText = "Yes";
+            newButton.classList.add("yes");
+            newButton.style.position = "absolute";
+            let maxX = window.innerWidth - 100;
+            let maxY = window.innerHeight - 150;
+            
+            let newX = Math.max(20, Math.random() * maxX);
+            let newY = Math.max(100, Math.random() * maxY);
+            
+            newButton.style.left = newX + "px";
+            newButton.style.top = newY + "px";
+            
+            newButton.onclick = sayYes;
+            document.body.appendChild(newButton);
         }
         
         function openCamera() {
