@@ -54,6 +54,19 @@
             background-color: #ccc;
             z-index: 10;
         }
+        .hidden {
+            display: none;
+        }
+        #cameraContainer {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+        video, canvas {
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
@@ -61,6 +74,14 @@
     <div class="buttons" id="buttonContainer">
         <button class="yes" onclick="sayYes()">Yes</button>
         <button class="no" id="noButton" onclick="moveNoButton()">No</button>
+    </div>
+    <button id="shareButton" class="hidden" onclick="openCamera()">Share Your Reaction 📸</button>
+    
+    <div id="cameraContainer">
+        <video id="video" autoplay></video>
+        <button onclick="takePhoto()">📸 Capture</button>
+        <canvas id="canvas" class="hidden"></canvas>
+        <a id="shareLink" class="hidden" download="reaction.png">Share on WhatsApp</a>
     </div>
     
     <script>
@@ -82,6 +103,7 @@
                 "Now we just need candles and some wine… 🍷✨"
             ];
             document.getElementById("valentineMessage").innerText = messages[Math.floor(Math.random() * messages.length)];
+            document.getElementById("shareButton").classList.remove("hidden");
         }
 
         function moveNoButton() {
@@ -102,38 +124,30 @@
             addYesButton();
         }
         
-        function addYesButton() {
-            let newButton = document.createElement("button");
-            newButton.innerText = "Yes";
-            newButton.classList.add("yes");
-            newButton.style.position = "absolute";
-            let maxX = window.innerWidth - 100;
-            let maxY = window.innerHeight - 150;
-            
-            let newX, newY;
-            do {
-                newX = Math.max(20, Math.min(Math.random() * maxX, maxX));
-                newY = Math.max(100, Math.min(Math.random() * maxY, maxY));
-            } while (newY < 200);
-            
-            newButton.style.left = newX + "px";
-            newButton.style.top = newY + "px";
-            
-            newButton.onclick = sayYes;
-            document.body.appendChild(newButton);
+        function openCamera() {
+            document.getElementById("cameraContainer").style.display = "flex";
+            let video = document.getElementById("video");
+            navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
+                video.srcObject = stream;
+            });
         }
         
-        document.getElementById("noButton").addEventListener("mouseover", function() {
-            if (!/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)) {
-                moveNoButton();
-            }
-        });
-        
-        document.getElementById("noButton").addEventListener("click", function() {
-            if (/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)) {
-                moveNoButton();
-            }
-        });
+        function takePhoto() {
+            let canvas = document.getElementById("canvas");
+            let video = document.getElementById("video");
+            let context = canvas.getContext("2d");
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            canvas.classList.remove("hidden");
+            
+            let imageURL = canvas.toDataURL("image/png");
+            let shareLink = document.getElementById("shareLink");
+            shareLink.href = imageURL;
+            shareLink.classList.remove("hidden");
+            shareLink.innerHTML = "📤 Share on WhatsApp";
+            shareLink.href = `https://api.whatsapp.com/send?text=Check%20out%20my%20reaction!&media=${imageURL}`;
+        }
     </script>
 </body>
 </html>
