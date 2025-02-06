@@ -20,12 +20,17 @@
             margin: 0;
             position: relative;
         }
+        .message-container {
+            position: relative;
+            z-index: 20;
+            background: #ffcccb;
+            padding: 2px;
+            display: inline-block;
+        }
         h1 {
             font-size: 2rem;
             margin-bottom: 20px;
-            position: relative;
-            z-index: 10;
-            padding: 20px;
+            padding: 10px;
         }
         .buttons {
             position: relative;
@@ -36,6 +41,7 @@
             justify-content: space-around;
             align-items: center;
             gap: 10px;
+
         }
         button {
             font-size: 1.2rem;
@@ -48,6 +54,7 @@
         .yes {
             background-color: #ff4081;
             color: white;
+            transition: transform 0.2s ease-in-out;
         }
         .no {
             background-color: #ccc;
@@ -55,19 +62,23 @@
         }
         .hidden {
             display: none;
+
         }
     </style>
 </head>
 <body>
-    <h1 id="valentineMessage">Will you be my Valentine? ❤️</h1>
+    <div class="message-container">
+        <h1 id="valentineMessage">Will you be my Valentine? ❤️</h1>
+    </div>
     <div class="buttons" id="buttonContainer">
-        <button class="yes" onclick="sayYes()">Yes</button>
+        <button class="yes" id="yesButton" onclick="sayYes()">Yes</button>
         <button class="no" id="noButton" onclick="addYesButton()">No</button>
     </div>
     <button id="whatsappButton" class="hidden" onclick="openWhatsApp()">Come tell me you love me then 💕</button>
     
     <script>
         let ohCount = 1;
+        let yesButtonScale = 1;
 
         function sayYes() {
             let messages = [
@@ -107,6 +118,13 @@
             
             newButton.onclick = sayYes;
             document.body.appendChild(newButton);
+            
+            growYesButton();
+        }
+        
+        function growYesButton() {
+            yesButtonScale += 0.01;
+            document.getElementById("yesButton").style.transform = `scale(${yesButtonScale})`;
         }
         
         function openWhatsApp() {
