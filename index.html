@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Be My Valentine?</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&display=swap');
+        
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffcccb;
+            font-family: 'Manrope', sans-serif;
+            text-align: center;
+            overflow: hidden;
+            margin: 0;
+            position: relative;
+        }
+        .message-container {
+            position: relative;
+            z-index: 20;
+            background: #ffcccb;
+            padding: 2px;
+            display: inline-block;
+        }
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            padding: 10px;
+        }
+        .buttons {
+            position: relative;
+            width: 60vw;
+            max-width: 350px;
+            height: 150px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            gap: 10px;
+        }
+        button {
+            font-size: 1.2rem;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin: 2px;
+        }
+        .yes {
+            background-color: #ff4081;
+            color: white;
+            transition: transform 0.2s ease-in-out;
+        }
+        .no {
+            background-color: #ccc;
+            z-index: 10;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="message-container">
+        <h1 id="valentineMessage">Will you be my Valentine? ❤️</h1>
+    </div>
+    <div class="buttons" id="buttonContainer">
+        <button class="yes" id="yesButton" onclick="sayYes()">Yes</button>
+        <button class="no" id="noButton" onclick="addYesButton()">No</button>
+    </div>
+    <button id="whatsappButton" class="hidden" onclick="openWhatsApp()">Come tell me you love me then 💕</button>
+    
+    <script>
+        let ohCount = 1;
+        let yesButtonScale = 1;
+
+        function sayYes() {
+            let messages = [
+                "Here to our 8th Valentine's Day. I love you.",
+                "Ofcourse it has to be a yes, don't know why I even have the no button.",
+                "How about, you, me, some rose flavoured alcohol and a bed? 😏",
+                "Even if it's not immidiate, I can always get you to, turn around. IYKYK.",
+                "We both knew this was going to happen! 😘",
+                "Get ready for a night you won’t forget! 😏",
+                "This means I get spoiled by you now, right? 💕",
+                "No take-backs! You’re mine now! 😆",
+                "Now we just need candles and some wine.🍷✨",
+                "How about I finally get you see you in something I've been waiting to get you out of?"
+            ];
+            document.getElementById("valentineMessage").innerText = messages[Math.floor(Math.random() * messages.length)];
+            document.getElementById("whatsappButton").classList.remove("hidden");
+        }
+
+        function addYesButton() {
+            document.getElementById("valentineMessage").innerHTML = "Abbey oh" + "h".repeat(ohCount).replace(/(.{15})/g, "$1<br>") + "!";
+            ohCount++;
+            
+            let newButton = document.createElement("button");
+            newButton.innerText = "Yes";
+            newButton.classList.add("yes");
+            newButton.style.position = "absolute";
+            let maxX = window.innerWidth - 100;
+            let maxY = window.innerHeight - 150;
+            
+            let newX = Math.max(20, Math.random() * maxX);
+            let newY = Math.max(100, Math.random() * maxY);
+            
+            newButton.style.left = newX + "px";
+            newButton.style.top = newY + "px";
+            
+            newButton.onclick = sayYes;
+            document.body.appendChild(newButton);
+            
+            growYesButton();
+        }
+        
+        function growYesButton() {
+            yesButtonScale += 0.01;
+            document.getElementById("yesButton").style.transform = `scale(${yesButtonScale})`;
+        }
+        
+        function openWhatsApp() {
+            window.location.href = "https://api.whatsapp.com/send?phone=919999836635&text=" + encodeURIComponent(`My Dearest SB,
+
+You are, and have always been, the love I never knew to ask for but the one my heart always recognized. In you, I have found a home—one not made of walls or places, but of laughter, of teasing glances, of hands that fit so perfectly with mine, and of a love that feels both boundless and certain.
+
+You are my greatest surprise, my deepest comfort, and the most beautiful thing my life has ever known. With you, love is not just a word or a grand gesture—it is in the way you look at me when you think I’m not watching, in the way you hold me like I am something precious, in the way you make even the smallest moments feel like they are meant to be cherished.
+
+I love you in the quiet and in the storm, in the light and in the dark, in the past, in the present, and in every tomorrow that awaits us. And if there is a world beyond this one, I will find you there too. I will always choose you.
+
+Forever yours,
+NS`);
+        }
+    </script>
+</body>
+</html>
